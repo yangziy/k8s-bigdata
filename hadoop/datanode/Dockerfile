@@ -1,8 +1,8 @@
-FROM hadoop-base:local
+FROM hadoop-base
 
 LABEL MAINTAINER "Pedro Horchulhack <pedrohorchulhack@gmail.com>"
 
-COPY --from=spark-base:local /spark /spark
+COPY --from=spark-base /spark /spark
 
 # HDFS settings
 ENV HDFS_CONF_dfs_datanode_data_dir=file:///hadoop/dfs/data

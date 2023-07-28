@@ -149,7 +149,7 @@ spec:
     - name: vol
   containers:
   - name: namenode
-    image: vpemfh7/hadoop-namenode:local
+    image: vpemfh7/hadoop-namenode
     envFrom:
     - configMapRef:
         name: hadoop-env
@@ -190,7 +190,7 @@ spec:
             matchLabels:
               app: datanode
       containers:
-        - image: vpemfh7/hadoop-datanode:local
+        - image: vpemfh7/hadoop-datanode
           name: datanode
           env:
           - name: SERVICE_PRECONDITION
@@ -207,7 +207,7 @@ spec:
             - containerPort: 8081
             - containerPort: 4040
             - containerPort: 50020
-        - image: vpemfh7/hadoop-nodemanager:local
+        - image: vpemfh7/hadoop-nodemanager
           name: nodemanager
           ports:
             - containerPort: 45454
@@ -233,7 +233,7 @@ metadata:
     app: resourcemanager
 spec:
   containers:
-    - image: vpemfh7/hadoop-resourcemanager:local
+    - image: vpemfh7/hadoop-resourcemanager
       name: resourcemanager
       env:
       - name: SERVICE_PRECONDITION
@@ -264,7 +264,7 @@ metadata:
     app: historyserver
 spec:
   containers:
-    - image: vpemfh7/hadoop-historyserver:local
+    - image: vpemfh7/hadoop-historyserver
       name: historyserver
       env:
       - name: SERVICE_PRECONDITION
