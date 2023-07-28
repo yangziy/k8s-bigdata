@@ -12,7 +12,7 @@ As the description says, this repository is an Apache Spark with an HDFS cluster
 ### Building k8s-bigdata
 You can just execute the `build.sh` file.
 ```sh
-$ ./build.sh
+$ ./build.sh <dockerhub user name to push to>
 ```
 
 ### Submitting the cluster

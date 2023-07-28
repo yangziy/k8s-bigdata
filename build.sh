@@ -2,15 +2,16 @@
 
 set -e
 
-USER="vpemfh7"
-TAG=local
+# Original repo: https://github.com/hrchlhck/k8s-bigdata
+# Original author: vpemfh7
+USER=$1
 
 ### FUNCTIONS ###
 # Build a docker image
 function docker_build() {
     local name=$1
     local prefix=$2
-    local image=$prefix-$name:$TAG
+    local image=$prefix-$name
     cd $([ -z "$3" ] && echo "$prefix/$name" || echo "$3")
     echo "-------------------------" building image $image in $(pwd)
     docker build --rm -t $image -t $USER/$image . 
@@ -21,7 +22,7 @@ function docker_build() {
 function docker_push() {
 	local name=$1
 	local prefix=$2
-	docker push $USER/$prefix-$name:$TAG
+	docker push $USER/$prefix-$name:
 }
 
 function build_all() {
@@ -40,10 +41,10 @@ function build_all() {
 }
 
 function push_all() {
-	local user=$1
-	local repo_prefix=$2
+	local repo_prefix=$1
 	for image in $(ls $repo_prefix); do
-		docker push $USER/$repo_prefix-$image:$TAG
+		echo $USER/$repo_prefix-$image
+		docker push $USER/$repo_prefix-$image
 	done
 }
 
@@ -51,7 +52,8 @@ function push_all() {
 # E.g. ./build.sh hibench namenode
 # The command above will build Dockerfiles inside ./hibench and ./namenode
 
-docker build spark -t spark-base:$TAG
+docker build spark -t spark-base -t $USER/spark-base
 build_all "-S" "hadoop" 
 push_all "hadoop"
+docker push $USER/spark-base
 
