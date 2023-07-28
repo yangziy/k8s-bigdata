@@ -1,5 +1,7 @@
 FROM debian:9
 
+COPY sources.list /etc/apt/sources.list
+
 RUN apt update \
     && apt install -y \
     openjdk-8-jdk \
