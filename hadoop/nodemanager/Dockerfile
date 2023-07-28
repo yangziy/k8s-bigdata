@@ -1,4 +1,4 @@
-FROM vpemfh7/hadoop-base
+FROM hadoop-base:local
 
 ADD run.sh /
 RUN chmod a+x /run.sh

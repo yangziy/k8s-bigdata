@@ -2,6 +2,7 @@
 
 set -e
 
+USER="vpemfh7"
 TAG=local
 
 ### FUNCTIONS ###
@@ -9,10 +10,10 @@ TAG=local
 function docker_build() {
     local name=$1
     local prefix=$2
-    local image=vpemfh7/$prefix-$name:$TAG
+    local image=$prefix-$name:$TAG
     cd $([ -z "$3" ] && echo "$prefix/$name" || echo "$3")
     echo "-------------------------" building image $image in $(pwd)
-    docker build --rm -t $image . 
+    docker build --rm -t $image -t $USER/$image . 
     cd -
 }
 
@@ -20,7 +21,7 @@ function docker_build() {
 function docker_push() {
 	local name=$1
 	local prefix=$2
-	docker push vpemfh7/$prefix-$name:$TAG
+	docker push $USER/$prefix-$name:$TAG
 }
 
 function build_all() {
@@ -42,7 +43,7 @@ function push_all() {
 	local user=$1
 	local repo_prefix=$2
 	for image in $(ls $repo_prefix); do
-		docker push $user/$repo_prefix-$image:$TAG
+		docker push $USER/$repo_prefix-$image:$TAG
 	done
 }
 
@@ -50,6 +51,7 @@ function push_all() {
 # E.g. ./build.sh hibench namenode
 # The command above will build Dockerfiles inside ./hibench and ./namenode
 
+docker build spark -t spark-base:$TAG
 build_all "-S" "hadoop" 
-push_all "vpemfh7" "hadoop"
+push_all "hadoop"
 

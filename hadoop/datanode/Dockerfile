@@ -1,8 +1,8 @@
-FROM vpemfh7/hadoop-base:latest
+FROM hadoop-base:local
 
 LABEL MAINTAINER "Pedro Horchulhack <pedrohorchulhack@gmail.com>"
 
-COPY --from=vpemfh7/spark-base:latest /spark /spark
+COPY --from=spark-base:local /spark /spark
 
 # HDFS settings
 ENV HDFS_CONF_dfs_datanode_data_dir=file:///hadoop/dfs/data
